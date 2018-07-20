@@ -92,5 +92,19 @@ git checkout 78a4bc
 git checkout 78a4bc^
 
 
+//将本地的项目放到远程已有的仓库
+1、在本地创建一个版本库（即文件夹），通过git init把它变成Git仓库；
+2、把项目复制到这个文件夹里面，再通过git add .把项目添加到仓库；
+(1)和(2)也可以直接在已有内容的文件夹里直接执行git init
+3、再通过git commit -m "注释内容"把项目提交到仓库；
+4、在Github上设置好SSH密钥后，新建一个远程仓库，通过git remote add origin https://github.com/xxx/xxx.git将本地仓库和远程仓库进行关联；
+5、最后通过git push -u origin master把本地仓库的项目推送到远程仓库（也就是Github）上；
+注：若新建远程仓库的时候自动创建了README文件会报错，解决办法
+    先：git pull --rebase origin master
+    再：git push -u origin master
+
+
+
+
 
 
