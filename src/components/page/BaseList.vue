@@ -8,11 +8,15 @@
                     </el-col>
                     <el-col :span="18" class="f-tar">
                         <div class="p-search-bar">
+                            <div class="el-input el-input--medium">
+                                {{vnum}}<v-number v-model="vnum" name="mynumber" :disabled="vdisabled"></v-number>
+                            </div>
                             <el-input v-model="formInline.user" size="medium" placeholder="审批人"></el-input>
                             <el-select v-model="formInline.region" size="medium" placeholder="活动区域">
                                 <el-option label="区域一" value="shanghai"></el-option>
                                 <el-option label="区域二" value="beijing"></el-option>
                             </el-select>
+                            <el-input-number size="medium" v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字" style="width:160px;"></el-input-number>
                             <button class="el-button search-btn" @click="onSubmit">查询</button>
                         </div>
                     </el-col>
@@ -46,17 +50,17 @@
 </template>
 <script>
 import pageMixin from '../common/pageMixin'
-// import Vue from 'vue'
-// console.log(Vue.extend(pageMixin,{
-//     data:{},
-//     methods:{}
-// }));
+import vNumber from '../common/MyNum.vue';
 export default {
+    components:{vNumber},
     mixins: [pageMixin],
     data: function () {
         return { 
             centerDialogVisible: false,
             visible: false,
+            num1: 1,
+            vnum: 1,
+            vdisabled:false,
             tableData: [{
                 date: '2016-05-02',
                 name: '王小虎',
@@ -153,6 +157,9 @@ export default {
         },
         handleDelete(){
 
+        },
+        handleChange(value) {
+            console.log(value);
         }
     }
 }
