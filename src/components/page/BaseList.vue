@@ -8,9 +8,9 @@
                     </el-col>
                     <el-col :span="18" class="f-tar">
                         <div class="p-search-bar">
-                            <div class="el-input el-input--medium">
-                                {{vnum}}<v-number v-model="vnum" name="mynumber" :disabled="vdisabled"></v-number>
-                            </div>
+                            <!-- <div class="el-input el-input--medium">
+                                {{vnum}}<v-number v-model="vnum" name="mynumber" :disabled="vdisabled" :max="1000" :min="10" @change="showchange(vnum)" @blur="showblur(vnum)"></v-number>
+                            </div> -->
                             <el-input v-model="formInline.user" size="medium" placeholder="审批人"></el-input>
                             <el-select v-model="formInline.region" size="medium" placeholder="活动区域">
                                 <el-option label="区域一" value="shanghai"></el-option>
@@ -160,6 +160,12 @@ export default {
         },
         handleChange(value) {
             console.log(value);
+        },
+        showchange(value){
+            console.log('sc',value);
+        },
+        showblur(value){
+            console.log('sb',value);
         }
     }
 }

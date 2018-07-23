@@ -44,18 +44,12 @@ Vue.directive('resize',{
 Vue.directive('oncontextmenu',{
     bind:function(el,binding,vnode){
         function documentHandler(e){
-            var event = event || window.event;
+            var event = e || window.event;
             event.preventDefault?(event.preventDefault()):(event.returnValue = false);
-            var pageX = event.pageX?event.pageX:(event.clientX+(document.body.scrollLeft||document.documentElement.scrollLeft)),
-                pageY = event.pageY?event.pageY:(event.clientY+(document.body.scrollTop||document.documentElement.scrollTop));
-            // var menu =el.children[1];
-            // menu.style.left = pageX+'px';
-            // menu.style.top = pageY+'px';
-            // menu.style.visibility = 'visible';
-            // console.log(pageX,pageY);
-
+            // var pageX = event.pageX?event.pageX:(event.clientX+(document.body.scrollLeft||document.documentElement.scrollLeft)),
+            //     pageY = event.pageY?event.pageY:(event.clientY+(document.body.scrollTop||document.documentElement.scrollTop));
             if(binding.expression){
-                binding.value(e);
+                binding.value.fn(event,binding.value.args);
             }
         }
         el.__handEvent__ = documentHandler;

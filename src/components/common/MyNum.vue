@@ -4,20 +4,17 @@
         <b>:{{currentValue}}:</b>
         <input
         class="el-input__inner"
+        v-bind="$attrs"
         :type="type"
         :disabled="inputDisabled"
         :value="currentValue"
-        :max="max"
-        :min="min"
-        :name="name"
-        :label="label"
         @compositionstart="handleComposition"
         @compositionupdate="handleComposition"
         @compositionend="handleComposition"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
-        @change="handleInputChange"
+        @change="handleChange"
         ref="input" >
     </span>
 </template>
@@ -61,30 +58,31 @@
             name: String,
             label: String
         },
-        // watch: {
-        //     value: {
-        //         immediate: true,
-        //         handler(value) {
-        //             let newVal = value === undefined ? value : Number(value);
-        //             if (newVal !== undefined && isNaN(newVal)) return;
-        //             if (newVal >= this.max) newVal = this.max;
-        //             if (newVal <= this.min) newVal = this.min;
-        //             this.currentValue = newVal;
-        //             this.$emit('input', newVal);
-        //         }
-        //     }
-        // },
-        // watch: {
-        //     'value'(val, oldValue) {
-        //         this.setCurrentValue(val);
-        //     }
-        // },
+        watch: {
+            value: {
+                immediate: true,
+                handler(value) {
+                    let newVal = value === undefined ? value : Number(value);
+                    if (newVal !== undefined && isNaN(newVal)) return;
+                    if (newVal >= this.max) newVal = this.max;
+                    if (newVal <= this.min) newVal = this.min;
+                    this.currentValue = newVal;
+                    this.$emit('input', newVal);
+                }
+            }
+        },
         computed:{
             inputDisabled() {
                 return this.disabled || (this.elForm || {}).disabled;
             }
         },
         methods:{
+            focus() {
+                (this.$refs.input || this.$refs.textarea).focus();
+            },
+            blur() {
+                (this.$refs.input || this.$refs.textarea).blur();
+            },
             isKorean(text) {
                 const reg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi;
                 return reg.test(text);
@@ -96,10 +94,7 @@
             handleBlur(event) {
                 this.focused = false;
                 this.$emit('blur', event);
-                this.$refs.input.setCurrentValue(this.currentValue);
-                // if (this.validateEvent) {
-                //     this.dispatch('ElFormItem', 'el.form.blur', [this.currentValue]);
-                // }
+                this.setCurrentValue(this.currentValue);
             },
             handleComposition(event) {
                 if (event.type === 'compositionend') {
@@ -113,21 +108,35 @@
             },
             handleInput(event) {
                 if (this.isOnComposition) return;
-                const value = event.target.value;
-                const newVal = value === '' ? undefined : Number(value);
-                //this.setCurrentValue(value);
+                var value = event.target.value;
+                value = value.replace(/[^\d\.]/g,'').replace(/^\./,'');//.replace(/\.\.$/,'.');
+                var newVal = value === '' ? undefined : Number(value);
                 if (!isNaN(newVal) || value === '') {
-                    this.setCurrentValue(newVal);
                     this.$emit('input', value);
+                    if (newVal >= this.max) newVal = this.max;
+                    if (newVal <= this.min) newVal = this.min;
+                    //event.target.value = newVal;
+                    this.setCurrentValue(newVal);
+                } else{
+                    //event.target.value = this.currentValue;
+                    //this.$emit('input', this.currentValue);
                 }
             },
             handleChange(event) {
-                this.$emit('change', event.target.value);
-            },
-            handleInputChange(value) {
-                const newVal = value === '' ? undefined : Number(value);
+                var value = event.target.value;
+                var newVal = value === '' ? undefined : Number(value);
                 if (!isNaN(newVal) || value === '') {
+                    if (newVal >= this.max) newVal = this.max;
+                    if (newVal <= this.min) newVal = this.min;
+                    console.log(newVal);
+                    event.target.value = newVal;
                     this.setCurrentValue(newVal);
+                    this.$emit('change', newVal);
+                } else{
+                    console.log(this.currentValue);
+                    
+                    event.target.value = this.currentValue;
+                    this.$emit('change', this.currentValue);
                 }
             },
             setCurrentValue(newVal) {
@@ -135,17 +144,10 @@
                 const oldVal = this.currentValue;
                 if (newVal >= this.max) newVal = this.max;
                 if (newVal <= this.min) newVal = this.min;
-                if (oldVal === newVal) {
-                    this.$refs.input.setCurrentValue(this.currentValue);
-                    return;
-                }
                 this.$emit('input', newVal);
                 this.$emit('change', newVal, oldVal);
                 this.currentValue = newVal;
-                // if (this.validateEvent) {
-                //     this.dispatch('ElFormItem', 'el.form.change', [value]);
-                // }
-            },
+            }
         }
     }
 </script>

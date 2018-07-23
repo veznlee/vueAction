@@ -6,6 +6,7 @@
                 <ul class="context-menu-box" style="width:120px;">
                     <li class="menu-item" @click="closeAll">关闭所有</li>
                     <li class="menu-item" @click="closeOther">关闭其他</li>
+                    <li class="menu-item" @click="closeNotActive">关闭非激活</li>
                     <!-- <li class="menu-item">关闭左侧全部</li>
                     <li class="menu-item">关闭右侧全部</li> -->
                 </ul>
@@ -14,7 +15,7 @@
             <div class="right-arrow" @click="setTagPosition('left')"><img src="/static/img/right_arrow.png"/></div>
             <div class="tags-scroll" v-resize="resizeTagPosition" ref="tagScroll">
                 <ul class="tags-scroll-inner" ref="tagBox" :style="tagWrapStyle">
-                    <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index" v-oncontextmenu="openContextMenu">
+                    <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index" v-oncontextmenu="{fn:openContextMenu,args:[item]}">
                         <a href="javascript:;" @click="routeTo(item.path)" class="tags-li-title">
                             {{item.title}}
                             <span class="tags-li-icon" @click.stop="closeTags(index)"><i class="el-icon-close"></i></span>
@@ -22,17 +23,6 @@
                     </li>
                 </ul>
             </div>
-            <!--<div class="tags-close-box">
-                <el-dropdown @command="handleTags">
-                    <el-button size="mini" type="primary">
-                        标签选项<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>
-                    </el-button>
-                    <el-dropdown-menu size="small" slot="dropdown">
-                        <el-dropdown-item command="other">关闭其他</el-dropdown-item>
-                        <el-dropdown-item command="all">关闭所有</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-            </div>-->
         </div>
     </div>
 </template>
@@ -48,7 +38,9 @@
                     'margin-left':'0px'
                 },
                 tagContextMenuShow:false,
-                tagContextMenuVisible:'hidden'
+                tagContextMenuVisible:'hidden',
+                activeTag:null,
+                mouseTag:null,
             }
         },
         methods: {
@@ -78,10 +70,17 @@
             },
             // 关闭其他标签
             closeOther(){
+                this.closeContextMenu();
+                this.tagsList = [];
+                this.tagScrollLeft = 0;
+                this.$router.push(this.mouseTag);
+            },
+            // 关闭非激活
+            closeNotActive(){
+                this.closeContextMenu();
                 const curItem = this.tagsList.filter(item => {
                     return item.path === this.$route.path;
                 });
-                this.closeContextMenu();
                 this.tagsList = curItem;
                 this.tagScrollLeft = 0;
             },
@@ -97,10 +96,9 @@
                 }
                 const index = this.getTagActiveIndex(route);
                 if(index<0){
-                    this.tagsList.push({
-                        title: route.meta.title,
-                        path: route.path
-                    });
+                    var activeTag = {title: route.meta.title,path: route.path};
+                    this.activeTag = activeTag;
+                    this.tagsList.push(activeTag);
                     this.$nextTick(()=>{
                         this.setTagPosition('add');
                     });
@@ -151,8 +149,8 @@
             resizeTagPosition(){
                 this.setTagPosition('resize');
             },
-            openContextMenu(e){
-                var event = event || window.event;
+            openContextMenu(event,args){
+                this.mouseTag = args[0];
                 event.preventDefault?(event.preventDefault()):(event.returnValue = false);
                 var container = this.$refs.tagsContainer,menu = this.$refs.tagsContextMenu;
 
