@@ -1,6 +1,6 @@
 说明：在 Git 中，有两个「偏移符号」： ^ 和 ~。
 ^ 的用法：在 commit 的后面加一个或多个 ^ 号，可以把 commit 往回偏移，偏移的数量是 ^ 的数量。例如：master^ 表示 master 指向的 commit 之前的那个 commit； HEAD^^ 表示 HEAD 所指向的 commit 往前数两个 commit。
-~ 的用法：在 commit 的后面加上 ~ 号和一个数，可以把 commit 往回偏移，偏移的数量是 ~ 号后面的数。例如：HEAD~5 表示 HEAD 指向的 commit往前数 5 个 commit。...
+~ 的用法：在 commit 的后面加上 ~ 号和一个数，可以把 commit 往回偏移，偏移的数量是 ~ 号后面的数。例如：HEAD~5 表示 HEAD 指向的 commit往前数 5 个 commit。
 
 
 从 GitHub 把中央仓库 clone 到本地（使用命令： git clone）
@@ -10,11 +10,11 @@
 提交一次或多次之后，把本地提交 push 到中央仓库（git push）
 
 //常用命令
-git add .
-git commit -m ''
-git pull
-git merge branch
-git push origin branch
+git add .//添加所有更改到暂存区
+git commit -m ''//提交暂存区的修改
+git pull//从远处仓库拉取最新资源
+git merge branch//合并分支
+git push origin branch//推送资源到远程分支
 
 merge——合并 commits
 git checkout master
@@ -61,9 +61,9 @@ git push origin -d books
 1、修改并新增commit
 2、git commit --amend  修复最新 commit 的错误
 3、git rebase -i HEAD^^
-交互式 rebase 最常用的场景是修改写错的 commit，但也可以用作其他用途。它的大致用法：
-
-使用方式是 git rebase -i 目标commit；
+交互式 rebase 最常用的场景是修改写错的 commit，但也可以用作其他用途。
+使用方式:
+git rebase -i 目标commit；
 在编辑界面中指定需要操作的 commits 以及操作类型；
 操作完成之后用 git rebase --continue 来继续 rebase 过程。
 
