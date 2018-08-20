@@ -87,6 +87,11 @@
                         icon: 'el-icon-warning',
                         index: 'permission',
                         title: '权限测试'
+                    },
+                    {
+                        icon: 'el-icon-warning',
+                        index: 'render',
+                        title: 'render函数'
                     }
                 ]
             }

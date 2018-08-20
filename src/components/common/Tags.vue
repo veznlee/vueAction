@@ -11,8 +11,8 @@
                     <li class="menu-item">关闭右侧全部</li> -->
                 </ul>
             </div>
-            <div class="left-arrow" @click="setTagPosition('right')"><img src="/static/img/left_arrow.png"/></div>
-            <div class="right-arrow" @click="setTagPosition('left')"><img src="/static/img/right_arrow.png"/></div>
+            <div class="left-arrow" @click="setTagPosition('right')"><img src="static/img/left_arrow.png"/></div>
+            <div class="right-arrow" @click="setTagPosition('left')"><img src="static/img/right_arrow.png"/></div>
             <div class="tags-scroll" v-resize="resizeTagPosition" ref="tagScroll">
                 <ul class="tags-scroll-inner" ref="tagBox" :style="tagWrapStyle">
                     <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index" v-oncontextmenu="{fn:openContextMenu,args:[item]}">

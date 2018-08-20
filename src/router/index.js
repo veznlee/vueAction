@@ -84,6 +84,12 @@ export default new Router({
                     path: '/permission',
                     component: resolve => require(['../components/page/Permission.vue'], resolve),
                     meta: { title: '权限测试', permission: true }
+                },
+                {
+                    // render函数
+                    path: '/render',
+                    component: resolve => require(['../components/page/Render.vue'], resolve),
+                    meta: { title: 'render函数', permission: true }
                 }
             ]
         },
