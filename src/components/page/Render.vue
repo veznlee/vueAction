@@ -21,13 +21,14 @@
                 <div><base-focus2 v-on:focus.native="onFocus"></base-focus2></div>
                 <p>为了解决这个问题，Vue 提供了一个 $listeners 属性，它是一个对象，里面包含了作用在这个组件上的所有监听器。</p>
                 <div><base-focus3 :label="label" :value="value1" v-on:focus.native="onFocus"></base-focus3></div>
-                
             </h1>
+            <ul>
+                <li v-for="(item, index) in items" :key=index><span>{{item.name}}</span></li>
+            </ul>
         </div>
         <div id="demo">
 
         </div>
-
     </div>
 </template>
 
@@ -48,6 +49,50 @@
             }
         }
     });
+
+    var getChildrenTextContent = function (children) {
+        return children.map(function (node) {
+            return node.children
+            ? getChildrenTextContent(node.children)
+            : node.text
+        }).join('')
+    };
+
+    // Vue.component('anchored-heading', {
+    //     render: function (createElement) {
+    //         // 创建 kebabCase 风格的ID
+    //         var headingId = getChildrenTextContent(this.$slots.default)
+    //         .toLowerCase()
+    //         .replace(/\W+/g, '-')
+    //         .replace(/(^\-|\-$)/g, '')
+
+    //         return createElement(
+    //             'h' + this.level,
+    //             [
+    //                 createElement('a', {
+    //                 attrs: {
+    //                     name: headingId,
+    //                     href: '#' + headingId
+    //                 }
+    //                 }, this.$slots.default)
+    //             ]
+    //         )
+    //     },
+    //     props: {
+    //         level: {
+    //         type: Number,
+    //         required: true
+    //         }
+    //     }
+    // })
+
+
+
+
+
+
+
+
 
     Vue.component('vue-model', {
         props: ['value'],
@@ -155,7 +200,8 @@
                 show3:true,
                 label:'测试',
                 value1:'111',
-                time:new Date()
+                time:new Date(),
+                items:['hehe','haha','heihei']
             }
         },
         methods:{

@@ -91,7 +91,19 @@
                     {
                         icon: 'el-icon-warning',
                         index: 'render',
-                        title: 'render函数'
+                        title: 'render函数',
+                        subs:[{
+                            index: 'render',
+                            title: 'render基础'
+                        },
+                        {
+                            index: 'slot',
+                            title: 'slot插槽'
+                        },
+                        {
+                            index: 'functional',
+                            title: '函数式组件'
+                        }]
                     }
                 ]
             }

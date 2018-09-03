@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">深加工管理系统</div>
+        <div class="logo">哎哟我去</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 消息中心 -->

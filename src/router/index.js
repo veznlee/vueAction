@@ -90,6 +90,18 @@ export default new Router({
                     path: '/render',
                     component: resolve => require(['../components/page/Render.vue'], resolve),
                     meta: { title: 'render函数', permission: true }
+                },
+                {
+                    // render函数之插槽
+                    path: '/slot',
+                    component: resolve => require(['../components/page/Slot.vue'], resolve),
+                    meta: { title: 'slot插槽', permission: true }
+                },
+                {
+                    // render函数之函数式组件
+                    path: '/functional',
+                    component: resolve => require(['../components/page/Functional.vue'], resolve),
+                    meta: { title: '函数式组件', permission: true }
                 }
             ]
         },
