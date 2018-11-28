@@ -24,7 +24,9 @@ Vue.config.webConfig = config
 
 import compoents from './components/common';
 import directives from './components/directives';
-import filters from './components/filters';
+//import filters from './components/filters';
+import * as custom from './components/filters'
+Object.keys(custom).forEach(key => Vue.filter(key, custom[key]))
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {

@@ -4,6 +4,8 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-tickets"></i> 用户表格</el-breadcrumb-item>
             </el-breadcrumb>
+            <!-- 命名的路由，带参数的情况，只能用name -->
+            <router-link :to="{ name: 'Paramtest', params: { id: 123 }}">User</router-link>
         </div>
         <div class="container">
             <div class="handle-box">

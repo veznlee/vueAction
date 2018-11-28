@@ -25,6 +25,11 @@
                         index: 'param',
                         title: '参数配置'
                     },
+                    // {
+                    //     icon: 'el-icon-service',
+                    //     index: 'paramtest/2',
+                    //     title: '参数测试'
+                    // },
                     {
                         icon: 'el-icon-tickets',
                         index: 'table',
@@ -47,17 +52,7 @@
                         subs: [
                             {
                                 index: 'form',
-                                title: '基本表单',
-                                subs:[
-                                    {
-                                        index: 'article',
-                                        title: '文章管理',
-                                    },
-                                    {
-                                        index: 'box',
-                                        title: '固定表单',
-                                    }
-                                ]
+                                title: '基本表单'
                             },
                             {
                                 index: 'editor',

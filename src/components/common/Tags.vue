@@ -95,6 +95,7 @@
                     return false;
                 }
                 const index = this.getTagActiveIndex(route);
+                console.log(index);
                 if(index<0){
                     var activeTag = {title: route.meta.title,path: route.path};
                     this.activeTag = activeTag;
@@ -178,6 +179,7 @@
             },
             routeTo(path){
                 this.$router.push(path);
+                //this.$router.replace(path);
             }
         },
         computed: {
